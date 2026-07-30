@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>刘逸菲 · 产品经理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#060B22;
+    --navy:#0B1640;
+    --navy-soft:#16214f;
+    --red:#E4392E;
+    --red-deep:#8E1620;
+    --ink:#F4F5FA;
+    --mute:#8B93BE;
+    --line:rgba(244,245,250,0.14);
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--navy-deep);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    overflow-x:hidden;
+    width:100%;
+  }
+  h1,h2,h3,.eyebrow,.stat-num{ font-family:'Space Grotesk',system-ui,sans-serif; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+  a{ color:inherit; }
+  img,svg{ max-width:100%; display:block; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    background:linear-gradient(to bottom, rgba(6,11,34,0.92), rgba(6,11,34,0));
+    pointer-events:none;
+  }
+  .nav *{ pointer-events:auto; }
+  .nav-name{ font-weight:600; font-size:15px; letter-spacing:0.02em; }
+  .nav-links{ display:flex; gap:clamp(14px,3vw,28px); font-size:13px; color:var(--mute); }
+  .nav-links a{ text-decoration:none; transition:color .2s ease; }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-links .cta-mini{
+    border:1px solid var(--line); border-radius:999px; padding:6px 16px; color:var(--ink);
+  }
+
+  section{ position:relative; width:100%; padding:0 clamp(20px,6vw,80px); }
+  .wrap{ max-width:1120px; margin:0 auto; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding-top:120px; padding-bottom:80px;
+    background:
+      radial-gradient(ellipse 60% 50% at 78% 28%, rgba(228,57,46,0.55), rgba(228,57,46,0) 70%),
+      radial-gradient(ellipse 40% 35% at 12% 72%, rgba(228,57,46,0.35), rgba(228,57,46,0) 70%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 65%);
+    overflow:hidden;
+  }
+  .hero-orbit{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    opacity:0.55;
+  }
+  .hero-orbit svg{ width:100%; height:100%; }
+  .orbit-ring{
+    transform-origin:center;
+    animation:spin 46s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .glow-dot{ animation:breathe 5.5s ease-in-out infinite; }
+  @keyframes breathe{ 0%,100%{ opacity:0.55; } 50%{ opacity:1; } }
+  .star{ animation:twinkle 3.2s ease-in-out infinite; }
+  @keyframes twinkle{ 0%,100%{ opacity:0.2; } 50%{ opacity:0.9; } }
+
+  .hero-content{ position:relative; z-index:1; max-width:640px; }
+  .eyebrow{
+    font-size:13px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--red); margin-bottom:18px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1px; background:var(--red); display:inline-block; }
+  h1.name{
+    font-size:clamp(40px,7vw,68px); font-weight:700; line-height:1.05; margin:0 0 22px;
+    letter-spacing:-0.01em;
+  }
+  .tagline{
+    font-size:clamp(17px,2.4vw,21px); color:#D8DBEE; line-height:1.65; max-width:520px; margin:0 0 36px;
+    font-weight:400;
+  }
+  .tagline b{ color:var(--ink); font-weight:600; }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px; border-radius:8px; font-size:15px; font-weight:600;
+    text-decoration:none; transition:transform .2s ease, box-shadow .2s ease;
+    cursor:pointer; border:none;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--red),var(--red-deep));
+    color:#fff; box-shadow:0 8px 24px rgba(228,57,46,0.28);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(228,57,46,0.4); }
+  .btn-ghost{
+    background:transparent; border:1px solid var(--line); color:var(--ink);
+  }
+  .btn-ghost:hover{ border-color:var(--ink); }
+  .btn:focus-visible, a:focus-visible{ outline:2px solid var(--red); outline-offset:3px; }
+
+  .scroll-hint{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    font-size:12px; color:var(--mute); letter-spacing:0.08em; text-transform:uppercase;
+    display:flex; flex-direction:column; align-items:center; gap:8px; z-index:1;
+  }
+  .scroll-line{ width:1px; height:32px; background:linear-gradient(var(--mute),transparent); }
+
+  /* ---------- section heading ---------- */
+  .sec-head{ margin-bottom:56px; max-width:640px; }
+  .sec-head .eyebrow{ margin-bottom:14px; }
+  .sec-head h2{ font-size:clamp(28px,4vw,40px); font-weight:600; margin:0 0 14px; letter-spacing:-0.01em; }
+  .sec-head p{ color:var(--mute); font-size:15.5px; line-height:1.7; margin:0; }
+
+  /* ---------- core projects ---------- */
+  .projects{ padding-top:130px; padding-bottom:60px; }
+  .proj{
+    position:relative;
+    border-radius:20px;
+    padding:clamp(28px,4vw,52px);
+    margin-bottom:28px;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .proj::before{
+    content:''; position:absolute; inset:0; z-index:-1;
+  }
+  .proj-a{ background:linear-gradient(135deg, var(--navy-soft) 0%, var(--navy) 100%); border:1px solid var(--line); }
+  .proj-b{
+    background:linear-gradient(135deg, var(--red-deep) 0%, #4A0F16 100%);
+    border:1px solid rgba(228,57,46,0.35);
+  }
+  .proj-b::after{
+    content:''; position:absolute; top:0; right:0; width:55%; height:100%;
+    background:linear-gradient(115deg, transparent 40%, rgba(11,22,64,0.5) 41%, rgba(11,22,64,0.5) 100%);
+    pointer-events:none;
+  }
+  .proj-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:8px; }
+  .proj-org{ font-size:13px; color:var(--mute); font-weight:600; letter-spacing:0.04em; }
+  .proj-b .proj-org{ color:rgba(244,245,250,0.7); }
+  .proj-period{ font-size:13px; color:var(--mute); }
+  .proj-b .proj-period{ color:rgba(244,245,250,0.6); }
+  .proj h3{ font-size:clamp(20px,2.6vw,26px); font-weight:600; margin:6px 0 14px; }
+  .proj-goal{ font-size:15px; color:#C8CBE6; line-height:1.7; margin:0 0 28px; max-width:640px; }
+  .proj-b .proj-goal{ color:rgba(244,245,250,0.82); }
+
+  .stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:24px; margin-bottom:24px; }
+  .stat-num{
+    font-size:clamp(26px,3.2vw,34px); font-weight:600; color:var(--ink);
+    display:block; line-height:1.1; margin-bottom:6px;
+  }
+  .stat-label{ font-size:13px; color:var(--mute); line-height:1.5; }
+  .proj-b .stat-label{ color:rgba(244,245,250,0.65); }
+
+  .proj-detail{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .proj-detail li{
+    font-size:14.5px; line-height:1.7; color:#C8CBE6; padding-left:18px; position:relative;
+  }
+  .proj-b .proj-detail li{ color:rgba(244,245,250,0.85); }
+  .proj-detail li::before{
+    content:''; position:absolute; left:0; top:9px; width:6px; height:6px; border-radius:50%;
+    background:var(--red);
+  }
+  .proj-b .proj-detail li::before{ background:#F4F5FA; }
+
+  /* ---------- education ---------- */
+  .edu{ padding:100px 0 100px; }
+  .edu-card{
+    background:linear-gradient(145deg, var(--navy-soft), var(--navy));
+    border:1px solid var(--line); border-radius:20px;
+    padding:clamp(28px,4vw,56px);
+  }
+  .edu-rank-row{ display:flex; gap:clamp(24px,5vw,64px); flex-wrap:wrap; margin-bottom:44px; padding-bottom:40px; border-bottom:1px solid var(--line); }
+  .edu-rank{ flex:1; min-width:220px; }
+  .edu-rank .badge{
+    display:inline-block; font-size:12px; font-weight:600; letter-spacing:0.05em;
+    color:var(--red); border:1px solid rgba(228,57,46,0.4); border-radius:999px;
+    padding:4px 12px; margin-bottom:14px;
+  }
+  .edu-rank h3{ font-size:clamp(20px,2.4vw,24px); font-weight:600; margin:0 0 8px; }
+  .edu-rank p{ font-size:14px; color:var(--mute); margin:0; line-height:1.6; }
+  .edu-story{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .edu-story h4{ font-size:15px; font-weight:600; color:var(--ink); margin:0 0 10px; }
+  .edu-story p{ font-size:14.5px; color:#C8CBE6; line-height:1.75; margin:0; }
+  @media (max-width:720px){ .edu-story{ grid-template-columns:1fr; } }
+
+  /* ---------- more experience ---------- */
+  .more{ padding:20px 0 100px; }
+  .more-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:720px){ .more-grid{ grid-template-columns:1fr; } }
+  .more-card{
+    background:var(--navy); border:1px solid var(--line); border-radius:16px;
+    padding:clamp(24px,3vw,34px);
+  }
+  .more-card .proj-org, .more-card .proj-period{ font-size:12.5px; color:var(--mute); }
+  .more-card h3{ font-size:18px; font-weight:600; margin:6px 0 14px; }
+  .more-card ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .more-card li{ font-size:14px; color:#C8CBE6; line-height:1.65; padding-left:16px; position:relative; }
+  .more-card li::before{ content:''; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--red); }
+
+  /* ---------- contact ---------- */
+  .contact{ padding:90px 0 120px; }
+  .contact-inner{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px;
+    background:linear-gradient(135deg, var(--navy-soft), var(--navy-deep));
+    border:1px solid var(--line); border-radius:24px; padding:clamp(30px,5vw,64px);
+    position:relative; overflow:hidden;
+  }
+  .contact-inner::before{
+    content:''; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:radial-gradient(circle, rgba(228,57,46,0.35), transparent 70%);
+    top:-120px; right:-100px; pointer-events:none;
+  }
+  @media (max-width:760px){ .contact-inner{ grid-template-columns:1fr; } }
+  .contact-left h2{ font-size:clamp(26px,3.6vw,34px); font-weight:600; margin:0 0 16px; }
+  .contact-left p{ font-size:15px; color:var(--mute); line-height:1.75; margin:0 0 28px; max-width:420px; }
+  .email-line{
+    display:inline-flex; align-items:center; gap:10px; font-size:16px; font-weight:600;
+    padding:12px 18px; border:1px solid var(--line); border-radius:10px; text-decoration:none;
+    margin-bottom:8px;
+  }
+  .email-line:hover{ border-color:var(--red); }
+
+  form{ display:flex; flex-direction:column; gap:14px; position:relative; z-index:1; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  label{ font-size:12.5px; color:var(--mute); }
+  input, textarea{
+    background:rgba(244,245,250,0.05); border:1px solid var(--line); border-radius:8px;
+    padding:12px 14px; color:var(--ink); font-family:inherit; font-size:14.5px;
+    width:100%;
+  }
+  input:focus, textarea:focus{ outline:none; border-color:var(--red); background:rgba(244,245,250,0.08); }
+  textarea{ resize:vertical; min-height:96px; }
+  .form-note{ font-size:12.5px; color:var(--mute); margin-top:4px; }
+
+  footer{
+    padding:32px clamp(20px,6vw,80px) 40px; text-align:center;
+    color:var(--mute); font-size:12.5px; border-top:1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-name">刘逸菲</div>
+  <div class="nav-links">
+    <a href="#projects">核心项目</a>
+    <a href="#education">教育背景</a>
+    <a href="#more">更多经历</a>
+    <a href="#contact" class="cta-mini">联系我</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-orbit" aria-hidden="true">
+    <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+      <g class="orbit-ring">
+        <ellipse cx="560" cy="230" rx="230" ry="70" fill="none" stroke="rgba(244,245,250,0.28)" stroke-width="1"/>
+      </g>
+      <circle class="glow-dot" cx="560" cy="230" r="5" fill="#F4F5FA"/>
+      <circle class="star" cx="470" cy="140" r="2" fill="#F4F5FA"/>
+      <circle class="star" cx="700" cy="180" r="2.4" fill="#F4F5FA" style="animation-delay:1.1s"/>
+      <circle class="star" cx="640" cy="330" r="1.8" fill="#F4F5FA" style="animation-delay:2s"/>
+    </svg>
+  </div>
+
+  <div class="wrap hero-content">
+    <div class="eyebrow">Product Manager</div>
+    <h1 class="name">刘逸菲</h1>
+    <p class="tagline">把 <b>AI 能力</b>落地为可衡量的<b>产品指标</b>——从听书场景的多感官体验重构，到广告变现链路的语义相关性保障。</p>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">预约聊聊</a>
+      <a href="#projects" class="btn btn-ghost">查看项目</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <span class="scroll-line"></span>
+  </div>
+</section>
+
+<!-- ============ CORE PROJECTS ============ -->
+<section class="projects" id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Core Projects</div>
+      <h2>核心项目</h2>
+      <p>两段与大模型能力强相关的实战经历，指标均来自项目实际落地结果。</p>
+    </div>
+
+    <!-- Project A -->
+    <div class="proj proj-a">
+      <div class="proj-top">
+        <div class="proj-org">抖音 · 番茄小说事业群</div>
+        <div class="proj-period">2025.06 — 2025.11</div>
+      </div>
+      <h3>产品经理</h3>
+      <p class="proj-goal">抖音番茄小说听&读基建重构：以平台留存率及留存时长为主要目标，挖掘听觉场景增量，通过体验升级 + AI 能力落地，解决听读操作割裂、AI 平读体验差两大核心痛点。</p>
+
+      <div class="stat-grid">
+        <div>
+          <span class="stat-num mono">43.73%</span>
+          <span class="stat-label">播放器重构后，同时听 + 操作同步率（不考虑试听）</span>
+        </div>
+        <div>
+          <span class="stat-num mono">1098s</span>
+          <span class="stat-label">AI 全链路落地后，单次听书平均时长</span>
+        </div>
+        <div>
+          <span class="stat-num mono">0.18%</span>
+          <span class="stat-label">AI 朗读调用失败率</span>
+        </div>
+      </div>
+
+      <ul class="proj-detail">
+        <li>听书入口体验升级：优化悬浮播放态交互，解决原弹窗式跳转遮挡阅读、约 10% 用户高频误触退出的问题</li>
+        <li>播放器体验重构：静态封面改为动态图文信息卡（3 秒自动切换书籍简介、标签），新增"边听边读"快捷入口，联动红果短剧 IP 内容</li>
+        <li>AI 朗读全链路落地：搭建「文本预处理-角色识别-情感标注-音色管理-语音合成」产品方案，将算法自研原需 6 个月的链路压缩至 1 个月跑通，实现全量书籍的 AI 多角色情感朗读能力</li>
+      </ul>
+    </div>
+
+    <!-- Project B -->
+    <div class="proj proj-b">
+      <div class="proj-top">
+        <div class="proj-org">美团 · 闪购事业部</div>
+        <div class="proj-period">2025.12 — 2026.03</div>
+      </div>
+      <h3>产品经理</h3>
+      <p class="proj-goal">歪马送酒垂类广告流量变现：歪马完成早期开城与供给扩张后进入商业化承接阶段，酒饮垂类商家存在新品推广、清库存等增量营销诉求，但垂类商业化基础设施缺失，大量可商业化流量未被充分变现。</p>
+
+      <div class="stat-grid">
+        <div>
+          <span class="stat-num mono">78.6%</span>
+          <span class="stat-label">LLM 语义相关性保障后，有效广告召回率（原 61.8%）</span>
+        </div>
+        <div>
+          <span class="stat-num mono">+70%</span>
+          <span class="stat-label">高密度实验组日均广告收入，较低密度组提升</span>
+        </div>
+        <div>
+          <span class="stat-num mono">92.4%</span>
+          <span class="stat-label">歪马独立广告全链路，归因覆盖率</span>
+        </div>
+      </div>
+
+      <ul class="proj-detail">
+        <li>分页面广告密度控制：结合酒饮强决策属性，依据用户意图强弱与体验敏感度对核心页面分层，泛浏览页适度释放广告库存，决策页保留原有选品体验</li>
+        <li>歪马独立广告全链路搭建：打通商家账号开通、投放计划配置、资金池管理、流量召回与效果归因的全链路，商家广告投放渗透率达 28%，商品映射成功率 96.8%</li>
+        <li>LLM 语义相关性保障：搭建离线/准实时语义资产层，低相关广告进入前排比例降至 1.1%，bad case 控制在 1.3%，未触发 2% 的用户体验红线</li>
+        <li>灰度实验与效果验证：用户侧 AB 分流策略，从 10% 最小流量开始逐步验证，分层监控收入目标、过程指标、风险指标</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section class="edu" id="education">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Education</div>
+      <h2>教育背景</h2>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-rank-row">
+        <div class="edu-rank">
+          <span class="badge">QS 18</span>
+          <h3>香港中文大学（CUHK）</h3>
+          <p>新媒体理学硕士 · 在读<br>2026.09 — 2027.07</p>
+        </div>
+        <div class="edu-rank">
+          <span class="badge">985 · 双一流</span>
+          <h3>中国人民大学</h3>
+          <p>外国语学院 日语专业 · 文学学士<br>2022.09 — 2026.06</p>
+        </div>
+      </div>
+
+      <div class="edu-story">
+        <div>
+          <h4>速成路径</h4>
+          <p>日语零基础到专业八级，用时 3 年，期间斩获全国翻译赛三等奖、论文赛二等奖。习惯用系统化路径快速建立新领域认知框架——产品、数据分析、AI 工具均为自学切入。</p>
+        </div>
+        <div>
+          <h4>跨文化浸润</h4>
+          <p>庆应义塾大学交换留学（2024.09—2025.01，东京），全日语授课环境深度浸润日本文化与互联网消费市场；参与第五届中日未来创发论坛，与日本高校学生就文化、教育议题开展实地调研与成果发表。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MORE EXPERIENCE ============ -->
+<section class="more" id="more">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">More Experience</div>
+      <h2>更多经历</h2>
+    </div>
+
+    <div class="more-grid">
+      <div class="more-card">
+        <div class="proj-org">北京奈亚信息技术</div>
+        <div class="proj-period">2026.03 — 2026.05</div>
+        <h3>AI 大模型校对与数据处理</h3>
+        <ul>
+          <li>系统梳理高中各学科试卷（数学公式、理化符号）及日俄德法西语书籍多语种混排场景下的高频失误类型，建立误识别分类体系</li>
+          <li>提炼「模型能力—人工兜底—反馈优化」三段式结构判断，建立个人校对 checklist</li>
+        </ul>
+      </div>
+
+      <div class="more-card">
+        <div class="proj-org">日语系微电影大赛</div>
+        <div class="proj-period">2025.02 — 2025.05</div>
+        <h3>视觉统筹负责人</h3>
+        <ul>
+          <li>独立承担剧组视觉物料全盘统筹，兼任造型统筹和道具统筹，拍摄当日道具到位率 100%</li>
+          <li>作品入选系级公开放映会展映，剧组获最佳摄影奖，个人获最佳造型奖</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <h2>联系我</h2>
+        <p>如果我的经历和你要找的产品经理人选相符，欢迎直接发邮件，或用右侧表单留言，我会尽快回复约面试时间。</p>
+        <a class="email-line" href="mailto:luo5387yf@163.com">✉ luo5387yf@163.com</a>
+      </div>
+      <form id="contactForm">
+        <div class="field">
+          <label for="f-name">姓名</label>
+          <input type="text" id="f-name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="f-email">邮箱</label>
+          <input type="email" id="f-email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="f-msg">留言</label>
+          <textarea id="f-msg" name="message" placeholder="职位信息、面试时间安排等"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="justify-content:center;">发送留言</button>
+        <p class="form-note">点击发送将通过你的邮件客户端发出，内容会预填到邮件正文中。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>刘逸菲 · Product Manager</footer>
+
+<script>
+  // Contact form -> mailto (no backend; explicit about what happens)
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('f-name').value;
+    var email = document.getElementById('f-email').value;
+    var msg = document.getElementById('f-msg').value;
+    var subject = encodeURIComponent('产品经理岗位交流 - 来自 ' + name);
+    var body = encodeURIComponent('姓名：' + name + '\n邮箱：' + email + '\n\n留言：\n' + msg);
+    window.location.href = 'mailto:luo5387yf@163.com?subject=' + subject + '&body=' + body;
+  });
+
+  // Count-up animation for stat numbers on scroll into view
+  (function(){
+    var statEls = document.querySelectorAll('.stat-num');
+    var animated = new WeakSet();
+
+    function parseTarget(text){
+      var match = text.match(/^([+-]?)(\d+(\.\d+)?)(.*)$/);
+      if(!match) return null;
+      return { prefix: match[1] || '', value: parseFloat(match[2]), decimals: match[3] ? match[3].length - 1 : 0, suffix: match[4] || '' };
+    }
+
+    function animateEl(el){
+      var original = el.textContent.trim();
+      var parsed = parseTarget(original);
+      if(!parsed){ return; }
+      var duration = 900;
+      var start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = parsed.value * eased;
+        el.textContent = parsed.prefix + current.toFixed(parsed.decimals) + parsed.suffix;
+        if(progress < 1){ requestAnimationFrame(step); }
+        else { el.textContent = original; }
+      }
+      requestAnimationFrame(step);
+    }
+
+    if('IntersectionObserver' in window){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting && !animated.has(entry.target)){
+            animated.add(entry.target);
+            animateEl(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      statEls.forEach(function(el){ observer.observe(el); });
+    }
+  })();
+</script>
+
+</body>
+</html>
